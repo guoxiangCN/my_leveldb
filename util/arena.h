@@ -12,6 +12,9 @@
 
 namespace leveldb {
 
+    /**
+     * @brief  简单的内存分配器实现.
+    */
     class Arena {
     public:
         Arena();
@@ -21,24 +24,42 @@ namespace leveldb {
 
         ~Arena();
 
+        /**
+         * @brief 
+         * @param bytes 
+         * @return 
+        */
         char *Allocate(size_t bytes);
 
+        /**
+         * @brief 
+         * @param bytes 
+         * @return 
+        */
         char *AllocateAligned(size_t bytes);
 
+        /**
+         * @brief 
+         * @return 
+        */
         std::size_t MemoryUsage() const {
             return memory_usage_.load(std::memory_order_relaxed);
         }
 
     private:
 
-        // @brief 当Allocate时当前块内存不够时就会走这个
-        // @param bytes 申请的字节数
-        // @return 申请内存的地址
+        /**
+         * @brief 
+         * @param bytes 
+         * @return 
+        */
         char *AllocateFallback(size_t bytes);
 
-        // @brief 分配一个块
-        // @param block_bytes
-        // @return
+        /**
+         * @brief 
+         * @param block_bytes 
+         * @return 
+        */
         char *AllocateNewBlock(size_t block_bytes);
 
         char *alloc_ptr_;

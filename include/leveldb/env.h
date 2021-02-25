@@ -25,31 +25,44 @@
 namespace leveldb {
 
     class FileLock;
-
     class Logger;
-
     class RandomAccessFile;
-
     class SequentialFile;
-
     class Slice;
-
     class WritableFile;
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT Env {
     public:
         Env();
 
         Env(const Env &) = delete;
-
         Env &operator=(const Env &) = delete;
 
         virtual ~Env();
 
+        /**
+         * @brief 获取默认的Env实例对象
+         * @return 返回的实例全局单例唯一
+        */
         static Env *Default();
 
+        /**
+         * @brief 打开一个支持顺序读的已经存在的文件.
+         * @param fname 文件名
+         * @param result 输出参数
+         * @return 如果打开成功，返回Status::OK()并且*result被设置为正确的值.
+        */
         virtual Status NewSequentialFile(const std::string &fname, SequentialFile **result) = 0;
 
+        /**
+         * @brief 
+         * @param fname 
+         * @param result 
+         * @return 
+        */
         virtual Status NewRandomAccessFile(const std::string &fname, RandomAccessFile **result) = 0;
 
         // O_TRUNC
@@ -88,12 +101,22 @@ namespace leveldb {
 
         virtual Status NewLogger(const std::string &fname, Logger **result) = 0;
 
+        /**
+         * @brief 
+         * @return 
+        */
         virtual uint64_t NowMicros() = 0;
 
+        /**
+         * @brief 
+         * @param micros 
+        */
         virtual void SleepForMicroseconds(int micros) = 0;
     };
 
-
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT SequentialFile {
     public:
         SequentialFile() = default;
@@ -101,7 +124,6 @@ namespace leveldb {
         virtual ~SequentialFile() = default;
 
         SequentialFile(const SequentialFile &) = delete;
-
         SequentialFile &operator=(const SequentialFile &) = delete;
 
         virtual Status Read(size_t n, Slice *result, char *scratch) = 0;
@@ -109,6 +131,9 @@ namespace leveldb {
         virtual Status Skip(uint64_t n) = 0;
     };
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT RandomAccessFile {
     public:
         virtual ~RandomAccessFile() = default;
@@ -116,6 +141,9 @@ namespace leveldb {
         virtual Status Read(uint64_t offset, size_t n, Slice *result, char *scratch) const = 0;
     };
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT WritableFile {
     public:
         WritableFile() = default;
@@ -135,6 +163,9 @@ namespace leveldb {
         virtual Status Sync() = 0;
     };
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT Logger {
     public:
         Logger() = default;
@@ -148,6 +179,9 @@ namespace leveldb {
         virtual void Logv(const char *fmt, std::va_list ap) = 0;
     };
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT FileLock {
     public:
         FileLock() = default;

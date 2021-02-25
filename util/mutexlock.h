@@ -8,6 +8,10 @@
 #include "port/port.h"
 
 namespace leveldb {
+
+    /**
+     * @brief 
+    */
     class MutexLock {
     public:
         explicit MutexLock(port::Mutex *mtx)

@@ -10,6 +10,10 @@
 
 namespace leveldb {
 
+    /**
+     * @brief 
+     * @tparam InstanceType 
+    */
     template<typename InstanceType>
     class NoDestructor {
     public:

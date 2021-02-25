@@ -14,7 +14,9 @@
 
 namespace leveldb {
 
-    // likes std::string_view.
+    /**
+     * @brief like std::string_view
+    */
     class LEVELDB_EXPORT Slice {
     public:
         Slice() : data_(""), size_(0) {}
@@ -25,10 +27,8 @@ namespace leveldb {
 
         Slice(const char *s) : data_(s), size_(strlen(s)) {}
 
-        // 显示支持拷贝构造
         Slice(const Slice &) = default;
 
-        // 显示支持拷贝赋值
         Slice &operator=(const Slice &) = default;
 
         NO_DISCARD
