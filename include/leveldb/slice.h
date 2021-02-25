@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <string>
+#include <cassert>
 #include <cstring>
 #include "leveldb/export.h"
 #include "leveldb/cxx.h"

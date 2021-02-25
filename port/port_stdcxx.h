@@ -12,7 +12,7 @@
 #if HAVE_SNAPPY
 #include <snappy.h>
 #endif  // HAVE_SNAPPY
-
+#include <cassert>
 #include <mutex>
 #include <condition_variable>
 
