@@ -14,30 +14,44 @@ namespace leveldb {
     class LEVELDB_EXPORT Comparator {
     public:
 
-        // @brief
+        /**
+         * @brief 
+         * @return 
+        */
         virtual ~Comparator() = default;
 
-        // @brief
-        // @param
-        // @param
-        // @return
+        /**
+         * @brief 
+         * @param a 
+         * @param b 
+         * @return 
+        */
         virtual int Compare(const Slice &a, const Slice &b) const = 0;
 
-        // @brief 获取当前比较器的名字.
-        // @return 当前比较器的名字
+        /**
+         * @brief 
+         * @return 
+        */
         virtual const char *Name() const = 0;
 
-        //
-        //
-        //
+        /**
+         * @brief 
+         * @param start 
+         * @param limit 
+        */
         virtual void FindShortestSeparator(std::string *start, const Slice &limit) const = 0;
 
-        //
-        //
-        //
+        /**
+         * @brief 
+         * @param key 
+        */
         virtual void FindShortSuccessor(std::string *key) const = 0;
     };
 
+    /**
+     * @brief 
+     * @return 
+    */
     LEVELDB_EXPORT const Comparator *BytewiseComparator();
 }
 

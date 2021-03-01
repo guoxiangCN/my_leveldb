@@ -12,14 +12,19 @@ namespace leveldb {
 
     class Slice;
 
+    /**
+     * @brief 
+    */
     class LEVELDB_EXPORT WriteBatch {
     public:
+
+        /**
+         * @brief 
+        */
         class LEVELDB_EXPORT Handler {
         public:
             virtual ~Handler();
-
             virtual void Put(const Slice &key, const Slice &val) = 0;
-
             virtual void Delete(const Slice &key) = 0;
         };
 
@@ -30,22 +35,45 @@ namespace leveldb {
 
         ~WriteBatch();
 
+        /**
+         * @brief 
+         * @param key 
+         * @param value 
+        */
         void Put(const Slice &key, const Slice &value);
 
+        /**
+         * @brief 
+         * @param key 
+        */
         void Delete(const Slice &key);
 
+        /**
+         * @brief 
+        */
         void Clear();
 
-        // @brief 近似的大小
+        /**
+         * @brief 
+         * @return 
+        */
         size_t ApproximateSize() const;
 
+        /**
+         * @brief 
+         * @param source 
+        */
         void Append(const WriteBatch &source);
 
+        /**
+         * @brief 
+         * @param handler 
+         * @return 
+        */
         Status Iterate(Handler *handler) const;
 
     private:
         friend class WriteBatchInternal;
-
         std::string rep_;
     };
 

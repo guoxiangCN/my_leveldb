@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\include",
-    "\\include\\leveldb"
+    "\\include\\leveldb",
+    "\\out",
+    "\\port",
+    "\\table",
+    "\\util"
   ],
-  "SelectedNode": "\\include\\leveldb\\status.h",
+  "SelectedNode": "\\util\\env_windows.cc",
   "PreviewInSolutionExplorer": false
 }

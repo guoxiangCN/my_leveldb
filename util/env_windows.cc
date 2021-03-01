@@ -5,6 +5,108 @@
 
 namespace leveldb {
 
+	namespace {
+
+		/**
+		 * @brief 写入文件的用户态缓存区大小
+		*/
+		constexpr const size_t kWritableFileBufferSize = 65536;
+
+		/**
+		 * @brief 默认的mmap上限, 64位系统上1000个,32位系统上为0
+		*/
+		constexpr const int kDefaultMmapLimit = (sizeof(void*) > 8) ? 1000 : 0;
+
+		/**
+		 * @brief 全局变量 mmap的限制数
+		*/
+		int g_mmap_limit = kDefaultMmapLimit;
+
+		/**
+		 * @brief Windows平台上从error_code获取error_msg
+		 * @param error_code 错误码
+		 * @return 错误信息
+		*/
+		std::string GetWindowsErrorMessage(DWORD error_code)
+		{
+			std::string message;
+			char* error_text = nullptr;
+			// Use MBCS version of FormatMessage to match return value.
+			size_t error_text_size = ::FormatMessageA(
+				FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_IGNORE_INSERTS,
+				nullptr, error_code, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+				reinterpret_cast<char*>(&error_text), 0, nullptr);
+			if (!error_text) {
+				return message;
+			}
+			message.assign(error_text, error_text_size);
+			::LocalFree(error_text);
+			return message;
+		}
+
+		Status WindowsError(const std::string& context, DWORD error_code) {
+			if (error_code == ERROR_FILE_NOT_FOUND || error_code == ERROR_PATH_NOT_FOUND)
+				return Status::NotFound(context, GetWindowsErrorMessage(error_code));
+			return Status::IOError(context, GetWindowsErrorMessage(error_code));
+		}
+
+		/**
+		 * @brief 对windows HANDLE的封装
+		*/
+		class ScopedHandle {
+		public:
+			ScopedHandle(HANDLE handle) : handle_(handle) {}
+			
+			ScopedHandle(const ScopedHandle&) = delete;
+			
+			ScopedHandle(ScopedHandle &&other) noexcept : handle_(other.Release()){}
+			
+			~ScopedHandle() { Close(); }
+
+			ScopedHandle& operator=(const ScopedHandle&) = delete;
+			
+			ScopedHandle& operator=(ScopedHandle&& rhs) noexcept 
+			{
+				if (this != &rhs) 
+				{
+					handle_ = rhs.Release();
+				}
+				return *this;
+			}
+
+			bool Close() 
+			{
+				if (!IsValid())
+				{
+					return true;
+				}
+				HANDLE h = handle_;
+				handle_ = INVALID_HANDLE_VALUE;
+				return ::CloseHandle(h);
+			}
+
+			bool IsValid() const { return handle_ != nullptr && handle_ != INVALID_HANDLE_VALUE; }
+
+			HANDLE Get() const { return handle_; }
+
+			/**
+			 * @brief 将当前HANDLE设置成无效值，并返回旧的HADNLE
+			 * @return 
+			*/
+			HANDLE Release() 
+			{
+				HANDLE old = handle_;
+				handle_ = INVALID_HANDLE_VALUE;
+				return old;
+			}
+
+		private:
+			HANDLE handle_;
+		};
+
+	} // end of namespace {
+
 	/**
 	 * @brief 
 	*/
@@ -12,7 +114,8 @@ namespace leveldb {
 	public:
 
 		WindowsSequentialFile(HANDLE h, std::string filename) 
-			: handle_(h), filename_(std::move(filename)) {
+			: handle_(h), filename_(std::move(filename)) 
+		{
 			
 		}
 
