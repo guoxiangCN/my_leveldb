@@ -297,8 +297,10 @@ namespace leveldb {
 
         private:
 
-            // @brief 将缓冲区的数据进行write。
-            // @brief 很可能只写入了文件系统的缓冲区, 并没刷入磁盘.
+            /**
+             * @brief 
+             * @return 
+            */
             Status FlushBuffer() {
                 Status status = WriteUnbuffered(buf_, pos_);
                 if (status.IsOK()) {
@@ -307,10 +309,12 @@ namespace leveldb {
                 return status;
             }
 
-            // @brief
-            // @param
-            // @param
-            // @return
+            /**
+             * @brief 
+             * @param data 
+             * @param size 
+             * @return 
+            */
             Status WriteUnbuffered(const char *data, size_t size) {
                 while (size > 0) {
                     ssize_t write_result = ::write(fd_, data, size);
@@ -326,6 +330,10 @@ namespace leveldb {
                 return Status::OK();
             }
 
+            /**
+             * @brief 
+             * @return 
+            */
             Status SyncDirIfManifest() {
                 Status status;
                 if (!is_manifest_) {
@@ -341,6 +349,12 @@ namespace leveldb {
                 return status;
             }
 
+            /**
+             * @brief 
+             * @param fd 
+             * @param fd_path 
+             * @return 
+            */
             static Status SyncFd(int fd, const std::string &fd_path) {
                 // MacOsX和ios上使用fcntl
 #if  defined(F_FULLFSYNC)

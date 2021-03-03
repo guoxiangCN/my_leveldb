@@ -11,7 +11,18 @@
 
 namespace leveldb {
 
-    // WriteBatch的header= 8字节的sequence_nbr + 4 字节的count
+    /**
+     * @brief 每个WriteBatch的记录头大小
+     *
+     * WriteBatch header format:
+     *
+     * || 8字节的SeqNbr || 4字节Count || datas  ||
+     * 
+     * WriteBatch data format:
+     *
+     * Put:   || 1字节的kTypeValue     || LengthPrefixedKey || LengthPrefixedVal ||
+     * Del:   || 1字节的kTypeDeletion  || LengthPrefixedKey ||
+    */
     static const size_t kHeader = 12;
 
     WriteBatch::WriteBatch() {
@@ -31,7 +42,7 @@ namespace leveldb {
         return rep_.size();
     }
 
-    Status WriteBatch::Iterate(Handler *handler) const {
+    Status WriteBatch::Iterate(WriteBatch::Handler *handler) const {
         Slice input(rep_);
         if (input.size() < kHeader) {
             return Status::Corruption("malformed WriteBatch(too small)");

@@ -10,9 +10,7 @@
 namespace leveldb {
 
     template<bool has_copy_constructor_and_copy_assign = true>
-    struct Copyable {
-
-    };
+    struct Copyable {};
 
     template<>
     struct Copyable<false> {

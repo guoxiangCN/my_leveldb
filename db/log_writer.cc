@@ -10,6 +10,10 @@
 
 namespace leveldb::log {
 
+    /**
+     * @brief 
+     * @param type_crc 
+    */
     static void InitTypeCrc(uint32_t *type_crc) {
         for (int i = 0; i <= kMaxRecordType; i++) {
             char t = static_cast<char>(i);
@@ -22,7 +26,8 @@ namespace leveldb::log {
     }
 
     Writer::Writer(WritableFile *dest, uint64_t dest_length)
-            : dest_(dest), block_offset_(dest_length % kBlockSize) {
+            : dest_(dest), 
+              block_offset_(dest_length % kBlockSize) {
         InitTypeCrc(type_crc_);
     }
 

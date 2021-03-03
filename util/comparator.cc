@@ -9,6 +9,7 @@
 namespace leveldb {
 
     namespace {
+
         class BytewiseComparatorImpl : public Comparator {
         public:
             BytewiseComparatorImpl() = default;

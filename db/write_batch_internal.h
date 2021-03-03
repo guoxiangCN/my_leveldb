@@ -9,33 +9,78 @@
 #include "leveldb/write_batch.h"
 
 namespace leveldb {
+
     class MemTable;
 
-    //  WriteBatchInternal 提供一些static方法用于操作WriteBatch
-    //  这些方法我们不希望在WriteBatch中暴露出去.
+    /*
+     * @brief WriteBatchInternal提供了一些辅助函数给到WriteBatch使用
+     * 这些辅助函数我们不希望通过WriteBatch提供给到用户.
+     */
     class WriteBatchInternal {
     public:
 
-        // 返回batch中的条目数.
+        /**
+         * @brief 返回batch中的条目数量.
+         * @param batch 
+         * @return 
+        */
         static int Count(const WriteBatch *batch);
 
-        // 给batch设置条目数量
+        /**
+         * @brief 将batch中的条目数量设置为n.
+         * @param batch 
+         * @param n 
+        */
         static void SetCount(WriteBatch *batch, int n);
 
-        // 返回这个batch中的起始条目的序号
+        /**
+         * @brief 获取当前WriteBatch的起始条目的序列号.
+         * @param batch 
+         * @return 
+        */
         static SequenceNumber Sequence(const WriteBatch *batch);
 
-        // 将seq这个指定的seqNbr作为这个batch的起始条目的序列号.
+        /**
+         * @brief 设置当前WriteBatch的起始条目的序列号.
+         * @param batch 
+         * @param seq 
+        */
         static void SetSequence(WriteBatch *batch, SequenceNumber seq);
 
+        /**
+         * @brief 
+         * @param batch 
+         * @return 
+        */
         static Slice Contents(const WriteBatch *batch) { return Slice(batch->rep_); }
 
+        /**
+         * @brief 
+         * @param batch 
+         * @param contents 
+        */
         static void SetContents(WriteBatch *batch, const Slice &contents);
 
+        /**
+         * @brief 
+         * @param batch 
+         * @return 
+        */
         static size_t ByteSize(const WriteBatch *batch) { return batch->rep_.size(); }
 
+        /**
+         * @brief 
+         * @param batch 
+         * @param memTable 
+         * @return 
+        */
         static Status InsertInto(const WriteBatch *batch, MemTable *memTable);
 
+        /**
+         * @brief 
+         * @param dst 
+         * @param src 
+        */
         static void Append(WriteBatch *dst, const WriteBatch *src);
 
     };

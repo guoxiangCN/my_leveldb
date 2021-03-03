@@ -6,24 +6,44 @@
 #define MY_LEVELDB_LOG_FORMAT_H
 
 namespace leveldb {
+
     namespace log {
 
         enum RecordType {
-            // Zero保留类型 用于预分配文件.
+
+            /**
+             * @brief 
+            */
             kZeroType = 0,
 
+            /**
+             * @brief 
+            */
             kFullType = 1,
 
-            // 碎片段
+            /**
+             * @brief 
+            */
             kFirstType = 2,
             kMiddleType = 3,
             kLastType = 4
         };
 
+        /**
+         * @brief 
+        */
         static const int kMaxRecordType = kLastType;
+        
+        /**
+         * @brief 每个WAL-LOG-BLOCK的字节大小 aka 32KB.
+         */
         static const int kBlockSize = 32768;
 
-        // 4 bytes checksum + 2 bytes length + 1 bytes for type.
+        /**
+         * @brief 每条WAL-LOG-RECORD的头大小
+         * 
+         * 4字节的checksum + 2字节的长度信息 + 1字节的type
+        */
         static const int kHeaderSize = 4 + 2 + 1;
 
     }

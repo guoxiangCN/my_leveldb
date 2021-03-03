@@ -13,7 +13,7 @@ namespace leveldb {
     class Slice;
 
     /**
-     * @brief 
+     * @brief 代表一次批量写。
     */
     class LEVELDB_EXPORT WriteBatch {
     public:

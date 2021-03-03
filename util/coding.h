@@ -30,7 +30,12 @@ namespace leveldb {
     const char* GetVarint32Ptr(const char* p, const char* limit, uint32_t *value);
     const char* GetVarint64Ptr(const char* p, const char* limit, uint64_t *value);
 
-    // 将一个无符号32位整形编码成varint
+    /**
+     * @brief 
+     * @param dst 
+     * @param v 
+     * @return 
+    */
     static inline char *EncodeVarint32(char *dst, uint32_t v) {
         auto *ptr = reinterpret_cast<uint8_t *>(dst);
         static const int B = 128; // 1000 0000
@@ -59,6 +64,12 @@ namespace leveldb {
         return reinterpret_cast<char *>(ptr);
     }
 
+    /**
+     * @brief 
+     * @param dst 
+     * @param v 
+     * @return 
+    */
     static inline char *EncodeVarint64(char *dst, uint64_t v) {
         static constexpr int B = 128;
         auto *ptr = reinterpret_cast<uint8_t *>(dst);
@@ -70,6 +81,11 @@ namespace leveldb {
         return reinterpret_cast<char *>(ptr);
     }
 
+    /**
+     * @brief 
+     * @param dst 
+     * @param value 
+    */
     static inline void EncodeFixed32(char *dst, uint32_t value) {
         auto *const buffer = reinterpret_cast<uint8_t *>(dst);
         buffer[0] = static_cast<uint8_t>(value);
@@ -78,6 +94,11 @@ namespace leveldb {
         buffer[3] = static_cast<uint8_t>(value >> 24U);
     }
 
+    /**
+     * @brief 
+     * @param ptr 
+     * @return 
+    */
     static inline uint32_t DecodeFixed32(const char *ptr) {
         const auto *const buffer = reinterpret_cast<const uint8_t *>(ptr);
         return (static_cast<uint32_t>(buffer[0])) |
@@ -86,6 +107,11 @@ namespace leveldb {
                (static_cast<uint32_t>(buffer[3]) << 24U);
     }
 
+    /**
+     * @brief 
+     * @param dst 
+     * @param value 
+    */
     static inline void EncodeFixed64(char *dst, uint64_t value) {
         auto *const buffer = reinterpret_cast<uint8_t *>(dst);
         buffer[0] = static_cast<uint8_t>(value);
@@ -98,6 +124,11 @@ namespace leveldb {
         buffer[7] = static_cast<uint8_t>(value >> 56U);
     }
 
+    /**
+     * @brief 
+     * @param ptr 
+     * @return 
+    */
     static inline uint64_t DecodeFixed64(const char *ptr) {
         const auto *const buffer = reinterpret_cast<const uint8_t *>(ptr);
         return (static_cast<uint64_t>(buffer[0])) |

@@ -102,7 +102,7 @@ namespace leveldb {
         virtual Status NewLogger(const std::string &fname, Logger **result) = 0;
 
         /**
-         * @brief 
+         * @brief 获取当前的微秒数.
          * @return 
         */
         virtual uint64_t NowMicros() = 0;
