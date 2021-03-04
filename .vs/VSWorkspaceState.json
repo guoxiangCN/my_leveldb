@@ -4,8 +4,6 @@
     "\\db",
     "\\include",
     "\\include\\leveldb",
-    "\\port",
-    "\\table",
     "\\util"
   ],
   "SelectedNode": "\\db\\log_writer.cc",

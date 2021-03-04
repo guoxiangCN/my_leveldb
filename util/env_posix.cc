@@ -350,9 +350,9 @@ namespace leveldb {
             }
 
             /**
-             * @brief 
-             * @param fd 
-             * @param fd_path 
+             * @brief SynFd用于将write()调用后缓存在文件系统的缓冲区的数据强制刷入磁盘. 
+             * @param fd 强刷的文件描述符.
+             * @param fd_path
              * @return 
             */
             static Status SyncFd(int fd, const std::string &fd_path) {

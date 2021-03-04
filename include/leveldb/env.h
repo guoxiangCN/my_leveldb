@@ -65,40 +65,132 @@ namespace leveldb {
         */
         virtual Status NewRandomAccessFile(const std::string &fname, RandomAccessFile **result) = 0;
 
-        // O_TRUNC
+        /**
+         * @brief 
+         * O_TRUNC
+         * @param fname 
+         * @param result 
+         * @return 
+        */
         virtual Status NewWritableFile(const std::string &fname, WritableFile **result) = 0;
 
-        // O_APPEND
+        /**
+         * @brief 
+        * O_APPEND
+         * @param fname 
+         * @param result 
+         * @return 
+        */
         virtual Status NewAppendableFile(const std::string &fname, WritableFile **result) = 0;
 
+        /**
+         * @brief 
+         * @param fname 
+         * @return 
+        */
         virtual bool FileExists(const std::string &fname) = 0;
 
+        /**
+         * @brief 
+         * @param dir 
+         * @param result 
+         * @return 
+        */
         virtual Status GetChildren(const std::string &dir, std::vector<std::string> *result) = 0;
 
+        /**
+         * @brief 
+         * @param fname 
+         * @return 
+        */
         virtual Status RemoveFile(const std::string &fname);
 
+        /**
+         * @brief 
+         * @param fname 
+         * @return 
+        */
         virtual Status DeleteFile(const std::string &fname);
 
+        /**
+         * @brief 
+         * @param dirname 
+         * @return 
+        */
         virtual Status CreateDir(const std::string &dirname) = 0;
 
+        /**
+         * @brief 
+         * @param dirname 
+         * @return 
+        */
         virtual Status RemoveDir(const std::string &dirname);
 
+        /**
+         * @brief 
+         * @param dirname 
+         * @return 
+        */
         virtual Status DeleteDir(const std::string &dirname);
 
+        /**
+         * @brief 
+         * @param fname 
+         * @param file_size 
+         * @return 
+        */
         virtual Status GetFileSize(const std::string &fname, uint64_t *file_size) = 0;
 
+        /**
+         * @brief 
+         * @param src 
+         * @param target 
+         * @return 
+        */
         virtual Status RenameFile(const std::string &src, const std::string &target) = 0;
 
+        /**
+         * @brief 
+         * @param fname 
+         * @param lock 
+         * @return 
+        */
         virtual Status LockFile(const std::string &fname, FileLock **lock) = 0;
 
+        /**
+         * @brief 
+         * @param lock 
+         * @return 
+        */
         virtual Status UnlockFile(FileLock *lock) = 0;
 
+        /**
+         * @brief 
+         * @param func 
+         * @param arg 
+        */
         virtual void Schedule(void (*func)(void *arg), void *arg) = 0;
 
+        /**
+         * @brief 
+         * @param func 
+         * @param arg 
+        */
         virtual void StartThread(void (*func)(void *arg), void *arg) = 0;
 
+        /**
+         * @brief 
+         * @param path 
+         * @return 
+        */
         virtual Status GetTestDirectory(std::string *path) = 0;
 
+        /**
+         * @brief 
+         * @param fname 
+         * @param result 
+         * @return 
+        */
         virtual Status NewLogger(const std::string &fname, Logger **result) = 0;
 
         /**

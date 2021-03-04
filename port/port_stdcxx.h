@@ -35,9 +35,9 @@ namespace leveldb {
                 mtx_.lock();
             }
 
-            bool TryLock() {
+           /* bool TryLock() {
                 return mtx_.try_lock();
-            }
+            }*/
 
             void Unlock() {
                 mtx_.unlock();

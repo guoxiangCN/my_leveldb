@@ -1,2 +1,2 @@
-PlatformToolSet=v142:VCToolArchitecture=Native64Bit:VCToolsVersion=14.26.28801:TargetPlatformVersion=10.0.18362.0:
+PlatformToolSet=v142:VCToolArchitecture=Native64Bit:VCToolsVersion=14.26.28801:TargetPlatformVersion=10.0.18362.0:VcpkgTriplet=x64-windows:
 Debug|x64|F:\cpp-projects\my_leveldb\cmake-build-debug\CMakeFiles\3.19.0\CompilerIdCXX\|

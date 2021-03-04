@@ -101,8 +101,12 @@ void testEnv() {
     auto pEnv = leveldb::Env::Default();
     std::cout << pEnv->NowMicros() << std::endl;
 
-    //pEnv->SleepForMicroseconds(1000000L);
-    auto sx = pEnv->CreateDir("/data/posix_test");
+    try {
+        auto sx = pEnv->CreateDir("/data/posix_test");
+    }
+    catch (const std::exception& ex) {
+        std::cout << ex.what() << std::endl;
+    }
     // std::cout << sx.ToString() << std::endl;
 
     std::cout << std::boolalpha << pEnv->FileExists("/data/posix_test") << std::endl;

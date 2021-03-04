@@ -1,5 +1,6 @@
 #include "leveldb/env.h"
 #include "leveldb/slice.h"
+#include "util/no_destructor.h"
 #include <Windows.h>
 #include <thread>
 
@@ -232,7 +233,10 @@ namespace leveldb {
 		}
 	};
 
-
+	Env * Env::Default() {
+		static NoDestructor<WindowsEnv> instance;
+		return instance.get();
+	}
 	
 
 }

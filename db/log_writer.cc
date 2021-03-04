@@ -8,6 +8,8 @@
 #include "util/coding.h"
 #include "util/crc32c.h"
 
+#include <algorithm>
+
 namespace leveldb {
 namespace log {
 
@@ -36,9 +38,58 @@ namespace log {
 
         Status Writer::AddRecord(const Slice& slice)
         {
-           size_t size = slice.size();
+           size_t left = slice.size();
+           const char* ptr =  slice.data();
 
-        }
+           Status s;
+           bool begin = true;
+
+	
+	       do {
+				// blockSize: 10  0-9   current 7  10 -7 = 3
+				   int leftover = kBlockSize - block_offset_;
+				   if (leftover < leveldb::log::kHeaderSize) {
+					   static_assert(kHeaderSize == 7, "WAL-log header size <> 7");
+					   if (leftover > 0) {
+						   // 如果当前block存在剩余空间但是不足以放入一个header 则进行填充\0
+						   dest_->Append(Slice("\x0\x0\x0\x0\x0\x0", leftover));
+							   
+					   }
+
+					   // 归属一个新的block
+					   block_offset_ = 0;
+				   }
+						
+				   assert(kBlockSize - block_offset_ - kHeaderSize >= 0);
+
+				   // leftover可能==0,那么当前第一个物理块的数据部分则是空的
+				   const size_t avail = static_cast<size_t>(kBlockSize - block_offset_ - kHeaderSize);
+				   const size_t fragment_length = std::min(left, avail);
+
+				   leveldb::log::RecordType record_type;
+				   const bool end = (left == fragment_length);
+
+				   if (begin & end) {
+					   record_type = kFullType;
+				   }
+				   else if (begin) {
+					   record_type = kFirstType;
+				   }
+				   else if (end) {
+					   record_type = kLastType;
+				   }
+				   else {
+					   record_type = kMiddleType;
+				   }
+
+				   s = EmitPhysicalRecord(record_type, ptr, fragment_length);
+				   ptr += fragment_length;
+				   left -= fragment_length;	
+				   begin = false;
+				  
+		  } while(s.IsOK() && left > 0);
+		  return s;
+		}
 
         /**
          * ||                        header                              ||payload||
