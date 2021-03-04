@@ -8,6 +8,6 @@
     "\\table",
     "\\util"
   ],
-  "SelectedNode": "\\db\\write_batch.cc",
+  "SelectedNode": "\\db\\log_writer.cc",
   "PreviewInSolutionExplorer": false
 }
