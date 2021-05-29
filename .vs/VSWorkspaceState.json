@@ -6,6 +6,6 @@
     "\\include\\leveldb",
     "\\util"
   ],
-  "SelectedNode": "\\db\\log_writer.cc",
+  "SelectedNode": "\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

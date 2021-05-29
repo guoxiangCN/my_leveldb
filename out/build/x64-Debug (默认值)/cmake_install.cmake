@@ -1,8 +1,8 @@
-# Install script for directory: F:/cpp-projects/my_leveldb
+# Install script for directory: G:/LEVELDB/my_leveldb
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "F:/cpp-projects/my_leveldb/out/install/x64-Debug (默认值)")
+  set(CMAKE_INSTALL_PREFIX "G:/LEVELDB/my_leveldb/out/install/x64-Debug (默认值)")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "G:/LEVELDB/my_leveldb/out/build/x64-Debug (默认值)/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

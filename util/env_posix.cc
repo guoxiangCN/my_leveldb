@@ -66,7 +66,6 @@ namespace leveldb {
                     acquires_allowed_(max_acquires) {}
 
             Limiter(const Limiter &) = delete;
-
             Limiter &operator=(const Limiter &) = delete;
 
             bool Acquire() {

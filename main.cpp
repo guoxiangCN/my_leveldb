@@ -40,17 +40,30 @@ extern void testLogWriter();
 
 extern void testMemTable();
 
-int main() {
+void testWindowsSequenceFile() {
+    auto env = leveldb::Env::Default();
+    leveldb::SequentialFile* sf;
+    auto status = env->NewSequentialFile("G:/test_windows_env_sequential_file.txt", &sf);
+    std::cout << status.ToString() << std::endl;
 
-    testMemTable();
-    testArena();
-    testHistogram();
-    testState();
-    testAppendEscapedStringTo();
-    testEnv();
-    //
-    testLogWriter();
-    testSkipList();
+    char buffer[1024] = { 0 };
+    leveldb::Slice slice;
+    status = sf->Read(1024, &slice, buffer);
+    if (status.IsOK()) {
+        std::cout << std::string(buffer) << std::endl;
+    }
+}
+
+int main() {
+    testWindowsSequenceFile();
+    //testMemTable();
+    //testArena();
+    //testHistogram();
+    //testState();
+    //testAppendEscapedStringTo();
+    //testEnv();
+    //testLogWriter();
+    //testSkipList();
 
     return 0;
 }

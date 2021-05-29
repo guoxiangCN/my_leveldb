@@ -3,6 +3,9 @@
 #include "util/no_destructor.h"
 #include <Windows.h>
 #include <thread>
+#include <atomic>
+#include <cassert>
+#include <utility>
 
 namespace leveldb {
 
@@ -106,6 +109,30 @@ namespace leveldb {
 			HANDLE handle_;
 		};
 
+		class Limiter {
+		public:
+			Limiter(int max_acquires) :acquires_allowed_(max_acquires){}
+
+			Limiter(const Limiter&) = delete;
+			Limiter& operator=(const Limiter&) = delete;
+
+			bool Acquire() {
+				int old_acquires_allowed = acquires_allowed_.fetch_sub(1, std::memory_order_relaxed);
+				if (old_acquires_allowed > 0) {
+					return true;
+				}
+				acquires_allowed_.fetch_add(1, std::memory_order_relaxed);
+				return false;
+			}
+
+			void Release() {
+				acquires_allowed_.fetch_add(1, std::memory_order_relaxed);
+			}
+
+		private:
+			std::atomic<int> acquires_allowed_;
+		};
+
 	} // end of namespace {
 
 	/**
@@ -114,40 +141,61 @@ namespace leveldb {
 	class WindowsSequentialFile : public SequentialFile {
 	public:
 
-		WindowsSequentialFile(HANDLE h, std::string filename) 
-			: handle_(h), filename_(std::move(filename)) 
-		{
-			
-		}
+		WindowsSequentialFile(ScopedHandle h, std::string filename)
+			: handle_(std::move(h)), filename_(std::move(filename)) {}
 
-		~WindowsSequentialFile() override
-		{
-			if (handle_) {
-				CloseHandle(handle_);
-			}
-		}
+		~WindowsSequentialFile() override{}
 
 		virtual Status Read(size_t n, Slice* result, char* scratch) override
 		{
-			return Status();
+			DWORD bytes_read;
+
+			// DWORD是32位, 但是size_t一般是64bit,但是leveldb的文件被限制在了
+			// leveldb::Options::max_file_size
+	
+			assert(n <= (std::numeric_limits<DWORD>::max)());
+
+			if (!::ReadFile(handle_.Get(), scratch, static_cast<DWORD>(n), &bytes_read, nullptr)) {
+				return WindowsError(filename_, ::GetLastError());
+			}
+
+			*result = Slice(scratch, bytes_read);
+			return Status::OK();
 		}
 
 		virtual Status Skip(uint64_t n) override
 		{
-			return Status();
+			LARGE_INTEGER distance;
+			distance.QuadPart = n;
+			if (!::SetFilePointerEx(handle_.Get(), distance, nullptr, FILE_CURRENT)) {
+				return WindowsError(filename_, ::GetLastError());
+			}
+			return Status::OK();
 		}
 
 	private:
-		HANDLE handle_;
-		std::string filename_;
+		const std::string filename_;
+		const ScopedHandle handle_;
 	};
 
 	class WindowsEnv : public Env {
 
 		virtual Status NewSequentialFile(const std::string& fname, SequentialFile** result) override
 		{
-			
-			return Status();
+			*result = nullptr;
+
+			DWORD desired_access = GENERIC_READ;
+			DWORD share_mode = FILE_SHARE_READ;
+
+
+			ScopedHandle handle = ::CreateFileA(fname.c_str(),
+				desired_access, share_mode, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+			if (!handle.IsValid()) {
+				return WindowsError(fname, ::GetLastError());
+			}
+
+			*result = new WindowsSequentialFile(std::move(handle), fname);
+			return Status::OK();
 		}
 
 		virtual Status NewRandomAccessFile(const std::string& fname, RandomAccessFile** result) override

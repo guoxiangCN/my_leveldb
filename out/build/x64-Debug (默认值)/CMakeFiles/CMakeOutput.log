@@ -1,16 +1,16 @@
-The system is: Windows - 10.0.18363 - AMD64
+The system is: Windows - 10.0.19041 - AMD64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-Compiler: F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/HostX64/x64/cl.exe 
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe 
 Build flags: 
 Id flags:  
 
 The output was:
 0
-用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.26.28806 版
+用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.28.29334 版
 版权所有(C) Microsoft Corporation。保留所有权利。
 
 CMakeCCompilerId.c
-Microsoft (R) Incremental Linker Version 14.26.28806.0
+Microsoft (R) Incremental Linker Version 14.28.29334.0
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
 /out:CMakeCCompilerId.exe 
@@ -21,20 +21,20 @@ Compilation of the C compiler identification source "CMakeCCompilerId.c" produce
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
 
-The C compiler identification is MSVC, found in "F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/3.17.20032601-MSVC_2/CompilerIdC/CMakeCCompilerId.exe"
+The C compiler identification is MSVC, found in "G:/LEVELDB/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/3.18.20081302-MSVC_2/CompilerIdC/CMakeCCompilerId.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-Compiler: F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.26.28801/bin/HostX64/x64/cl.exe 
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe 
 Build flags: 
 Id flags:  
 
 The output was:
 0
-用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.26.28806 版
+用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.28.29334 版
 版权所有(C) Microsoft Corporation。保留所有权利。
 
 CMakeCXXCompilerId.cpp
-Microsoft (R) Incremental Linker Version 14.26.28806.0
+Microsoft (R) Incremental Linker Version 14.28.29334.0
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
 /out:CMakeCXXCompilerId.exe 
@@ -45,37 +45,23 @@ Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" p
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
 
-The CXX compiler identification is MSVC, found in "F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/3.17.20032601-MSVC_2/CompilerIdCXX/CMakeCXXCompilerId.exe"
-
-Determining if the C compiler works passed with the following output:
-Change Dir: F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
-
-Run Build Command(s):F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b5831 && [1/2] Building C object CMakeFiles\cmTC_b5831.dir\testCCompiler.c.obj
-[2/2] Linking C executable cmTC_b5831.exe
-
-
+The CXX compiler identification is MSVC, found in "G:/LEVELDB/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/3.18.20081302-MSVC_2/CompilerIdCXX/CMakeCXXCompilerId.exe"
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
+Change Dir: G:/LEVELDB/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
 
-Run Build Command(s):F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_b6fc7 && [1/2] Building C object CMakeFiles\cmTC_b6fc7.dir\CMakeCCompilerABI.c.obj
-[2/2] Linking C executable cmTC_b6fc7.exe
-
-
-
-Determining if the CXX compiler works passed with the following output:
-Change Dir: F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
-
-Run Build Command(s):F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_fc849 && [1/2] Building CXX object CMakeFiles\cmTC_fc849.dir\testCXXCompiler.cxx.obj
-[2/2] Linking CXX executable cmTC_fc849.exe
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_42bf0 && [1/2] Building C object CMakeFiles\cmTC_42bf0.dir\CMakeCCompilerABI.c.obj
+注意: 包含文件:  C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.18\Modules\CMakeCompilerABI.h
+[2/2] Linking C executable cmTC_42bf0.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: F:/cpp-projects/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
+Change Dir: G:/LEVELDB/my_leveldb/out/build/x64-Debug (默认值)/CMakeFiles/CMakeTmp
 
-Run Build Command(s):F:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_03a73 && [1/2] Building CXX object CMakeFiles\cmTC_03a73.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_03a73.exe
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_57dbc && [1/2] Building CXX object CMakeFiles\cmTC_57dbc.dir\CMakeCXXCompilerABI.cpp.obj
+注意: 包含文件:  C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.18\Modules\CMakeCompilerABI.h
+[2/2] Linking CXX executable cmTC_57dbc.exe
 
 
 
